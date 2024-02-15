@@ -1,0 +1,75 @@
+Para seleccionar el directorio de trabajo en R##
+Session > Set working directory > Choose directory > Genomica
+
+####Para instalar Ms Bayes###
+http://nbisweden.github.io/MrBayes/download.html
+Click en MrBayes-3.2.7-WIN.zip
+
+###Para convertir un archivo FASTA en NEXUS en R###
+install.packages("seqinr")
+install.packages("ape")
+
+library(seqinr)
+data=read.fasta("alineacionfastaya.fa")   ###Donde "alineacionfastaya.fa"="nombre de mi archivo"###
+library(ape)
+write.nexus.data(data,file="alineacionfastaya.nex",format="dna")
+
+##############################################################################
+###############################Tutorial MsBayes###############################
+###Abre así el programa(?): MrBayes-3.2.7-WIN > bin > mb.3.2.7-win64 ###
+############################Copia tu archivo alineacionnexusya.nex en bin############################
+
+############1. Abrir el archivo##############
+
+execute alineacionnexusya.nex
+
+############2. Establecer modelo de sustitución y sus parámetros##############
+##Teclea SHOWMODEL para revisar las características y parámetros del modelo de sustitución##
+SHOWMODEL 
+##A esto no le hagas caso ahorita pq tienes que leer el manual y saberle bien, se usarán los parámetros default, VETE DIRECTO A CORRER EL ANÁLISIS##
+
+###########3. Correr el análisis###########
+#############Lo que vas a hacer es teclear las características de las cadenas de Marcov Monte Carlo para las dos corridas. Decir cuantas cadenas ocupamos depende del análisis, no hay un numero mágico jsjs, depende de nuestra base de datos. Tenemos que corroborar la convergencia, si no ocurrió, entonces agregamos más cadenas. Pero igual ahorita no le moviste a nada, si no le sabes no le muevasss#############
+
+MCMC ngen=1000000 samplefreq=200 printfreq=200 printall=yes diagnfreq=2000 relburnin=yes burninfrac=0.2 savebrlens=yes;
+
+
+##Al terminar te preguntará si deseas continuar el análisis, teclea <<no>> si el valor de la desviación estándar es menor al que esperas, por ejemplo:0.05##
+
+#####4. Resumir y revisar los resultados###
+
+SUMP burnin=(aproximadamente el 20% de los datos muestreados) 
+SUMP burnin=1001
+#La información de la pantalla se guardará en un archivo con extensión .pstat#
+
+#Para la evaluación de las hipótesis filogenéticas y la estadística asociada a los árboles muéstranos en las MCMCs# 
+
+SUMT burnin=(aproximadamente el 20% de los datos muestreados)
+SUMT burnin=1001
+#La información de la pantalla se guardará en los archivos con las extensiones .parts, .tstat, .vstat, .trprobs, .con (este último árbol de consenso)#
+
+############Visualiza el árbol con FigTree############
+##Ahora coloca en el buscador, Download FigTree y entra a la página de SOFTPEDIA, descarga la carpeta zip FigTree.v1.4.4.zip, descompacta la carpeta, entra a FigTree.v1.4.4.exe, una vez ya este listo, ve a file, open y selecciona tu archivo con extensión .tre, que es el árbol consenso##
+
+
+##############################################################################
+###############################Tutorial RevGadgets###############################
+
+install.packages("devtools")
+
+devtools::install_github("revbayes/RevGadgets")
+
+install.packages("magick")
+
+library(RevBayes)
+
+###Selecciona el directorio de trabajo en R##
+#Session > Set working directory > Choose directory > Genómica > MrBayes-3.2.7-WIN > bin# 
+
+#specify the tree file
+file <- "alineacionnexusya.nex.con.tre"
+
+#read the tree
+tree <- readTrees(paths = file)
+
+#Plot the tree
