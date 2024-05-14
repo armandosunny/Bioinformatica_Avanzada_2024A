@@ -761,3 +761,128 @@ Este resultado muestra que hemos extraído correctamente los números de GenBank
 
 
 
+
+
+
+
+
+
+
+###Nuestro ejemplo####
+
+
+# Loop through the sequences and trim the pattern
+for (i in 1:length(fasta)) {
+  sequence <- as.character(fasta[[i]]) # convert the sequence to a character string
+  sequence <- gsub(".*(Canis.*lupus).*", "\\1", sequence) # remove everything that comes before the pattern
+  fasta[[i]] <- AAString(sequence) # convert the trimmed sequence back to a AAString object
+  
+  # Trim the name of the sequence
+  header <- names(fasta)[i]
+  header <- gsub("^>\\s*", "", header) # remove the ">" and any leading whitespace
+  header <- gsub("\\s.*", "", header) # remove any additional information after the name
+  names(fasta)[i] <- header # set the new name for the sequence
+}
+
+# Write the trimmed sequences to a new FASTA file
+writeXStringSet(fasta, "file2.fasta")
+
+
+
+
+
+Propósito del Código
+El objetivo del código es procesar una lista de secuencias en formato FASTA, recortando ciertas partes de las secuencias y sus nombres, y luego guardar las secuencias procesadas en un nuevo archivo FASTA.
+
+Código Explicado
+r
+Copiar código
+# Loop through the sequences and trim the pattern
+for (i in 1:length(fasta)) {
+  sequence <- as.character(fasta[[i]]) # convert the sequence to a character string
+  sequence <- gsub(".*(Canis.*lupus).*", "\\1", sequence) # remove everything that comes before the pattern
+  fasta[[i]] <- AAString(sequence) # convert the trimmed sequence back to a AAString object
+  
+  # Trim the name of the sequence
+  header <- names(fasta)[i]
+  header <- gsub("^>\\s*", "", header) # remove the ">" and any leading whitespace
+  header <- gsub("\\s.*", "", header) # remove any additional information after the name
+  names(fasta)[i] <- header # set the new name for the sequence
+}
+
+# Write the trimmed sequences to a new FASTA file
+writeXStringSet(fasta, "file2.fasta")
+Explicación Detallada
+Bucle a través de las secuencias y recorte del patrón:
+
+r
+Copiar código
+for (i in 1:length(fasta)) {
+Aquí se inicia un loop for que itera sobre cada secuencia en el objeto fasta. length(fasta) da el número total de secuencias en la lista fasta.
+
+Convertir la secuencia a una cadena de caracteres:
+
+r
+Copiar código
+sequence <- as.character(fasta[[i]])
+fasta[[i]] accede a la secuencia i-ésima en fasta, y as.character la convierte en una cadena de texto (string) para manipularla fácilmente.
+
+Eliminar todo lo que precede al patrón "Canis...lupus":
+
+r
+Copiar código
+sequence <- gsub(".*(Canis.*lupus).*", "\\1", sequence)
+gsub realiza una búsqueda y reemplazo global. La expresión regular ".*(Canis.*lupus).*" busca cualquier cosa antes del patrón "Canis...lupus" y lo elimina, dejando solo el patrón. \\1 es una referencia de retroceso que captura el grupo en paréntesis ().
+
+Convertir la secuencia recortada de nuevo a un objeto AAString:
+
+r
+Copiar código
+fasta[[i]] <- AAString(sequence)
+AAString(sequence) convierte la cadena de texto recortada de nuevo a un objeto AAString, adecuado para manipulación biológica.
+
+Recortar el nombre de la secuencia:
+
+r
+Copiar código
+header <- names(fasta)[i]
+names(fasta)[i] obtiene el nombre (header) de la i-ésima secuencia.
+
+Eliminar el ">" y cualquier espacio en blanco inicial:
+
+r
+Copiar código
+header <- gsub("^>\\s*", "", header)
+gsub("^>\\s*", "", header) elimina el carácter > al inicio y cualquier espacio en blanco que siga. ^ indica el inicio de la cadena, > busca el carácter >, y \\s* busca cero o más espacios en blanco.
+
+Eliminar cualquier información adicional después del nombre:
+
+r
+Copiar código
+header <- gsub("\\s.*", "", header)
+gsub("\\s.*", "", header) elimina cualquier cosa después del primer espacio en blanco, manteniendo solo el primer segmento del nombre.
+
+Establecer el nuevo nombre para la secuencia:
+
+r
+Copiar código
+names(fasta)[i] <- header
+Se asigna el nombre recortado al i-ésimo elemento de fasta.
+
+Escribir las secuencias recortadas a un nuevo archivo FASTA:
+
+r
+Copiar código
+writeXStringSet(fasta, "file2.fasta")
+writeXStringSet(fasta, "file2.fasta") guarda el objeto fasta procesado en un nuevo archivo FASTA llamado "file2.fasta".
+
+Resumen
+Este código recorre una lista de secuencias en formato FASTA, recorta la parte relevante de cada secuencia y ajusta los nombres de las secuencias, eliminando cualquier información adicional y caracteres no deseados. Luego, guarda las secuencias procesadas en un nuevo archivo FASTA. Específicamente:
+
+Convierte cada secuencia en una cadena de caracteres para facilitar la manipulación.
+Recorta todo lo que precede a un patrón específico (en este caso, "Canis...lupus").
+Vuelve a convertir las secuencias a objetos AAString.
+Recorta los nombres de las secuencias para eliminar caracteres innecesarios.
+Guarda las secuencias procesadas en un nuevo archivo FASTA.
+
+
