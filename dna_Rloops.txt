@@ -1,0 +1,763 @@
+Símbolos y Sintaxis Comunes en Loops en R
+1. for
+El loop for itera sobre una secuencia de valores, ejecutando un bloque de código para cada valor de la secuencia.
+
+Sintaxis:
+
+r
+Copiar código
+for (variable in secuencia) {
+  # código a ejecutar
+}
+for: Palabra clave que inicia el loop.
+variable: Nombre de la variable que toma el valor de cada elemento de la secuencia en cada iteración.
+in: Palabra clave que indica la pertenencia de la variable a la secuencia.
+secuencia: La colección de valores sobre la que se itera (puede ser un vector, lista, etc.).
+{ ... }: Llaves que delimitan el bloque de código que se ejecuta en cada iteración.
+Ejemplo:
+
+r
+Copiar código
+for (i in 1:5) {
+  print(i)
+}
+2. while
+El loop while ejecuta un bloque de código repetidamente mientras una condición especificada sea verdadera.
+
+Sintaxis:
+
+r
+Copiar código
+while (condición) {
+  # código a ejecutar
+}
+while: Palabra clave que inicia el loop.
+condición: Expresión lógica que se evalúa antes de cada iteración; si es TRUE, el loop continúa.
+{ ... }: Llaves que delimitan el bloque de código que se ejecuta mientras la condición sea TRUE.
+Ejemplo:
+
+r
+Copiar código
+x <- 1
+while (x <= 5) {
+  print(x)
+  x <- x + 1
+}
+3. repeat
+El loop repeat ejecuta un bloque de código indefinidamente hasta que se encuentra una instrucción break que termine el loop.
+
+Sintaxis:
+
+r
+Copiar código
+repeat {
+  # código a ejecutar
+  if (condición) {
+    break
+  }
+}
+repeat: Palabra clave que inicia el loop.
+{ ... }: Llaves que delimitan el bloque de código que se ejecuta repetidamente.
+if (condición) { break }: Estructura condicional dentro del loop que detiene la ejecución cuando la condición es TRUE.
+Ejemplo:
+
+r
+Copiar código
+x <- 1
+repeat {
+  print(x)
+  x <- x + 1
+  if (x > 5) {
+    break
+  }
+}
+Otros Símbolos y Operadores Comunes
+<-: Operador de asignación que asigna el valor de la derecha a la variable de la izquierda.
+==: Operador de igualdad que compara si dos valores son iguales.
+!=: Operador de desigualdad que compara si dos valores no son iguales.
+<, >, <=, >=: Operadores de comparación que comparan valores numéricos.
+%%: Operador de módulo que devuelve el resto de la división.
+&&, ||: Operadores lógicos "AND" y "OR" que se utilizan para combinar condiciones lógicas.
+!: Operador lógico "NOT" que invierte el valor de una expresión lógica.
+nchar(): Función que devuelve la longitud de una cadena de texto.
+substring(): Función que extrae una subcadena de texto dada una cadena, una posición inicial y una posición final.
+unlist(): Función que convierte una lista en un vector.
+Ejemplo de uso combinado:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+count_GC <- 0
+for (nucleotide in unlist(strsplit(dna_seq, ""))) {
+  if (nucleotide == "G" || nucleotide == "C") {
+    count_GC <- count_GC + 1
+  }
+}
+gc_content <- (count_GC / nchar(dna_seq)) * 100
+print(gc_content)
+En este ejemplo:
+
+strsplit(dna_seq, "") divide la secuencia de ADN en caracteres individuales.
+unlist() convierte la lista de caracteres en un vector.
+for (nucleotide in ...) itera sobre cada carácter en el vector.
+if (nucleotide == "G" || nucleotide == "C") verifica si el carácter es 'G' o 'C'.
+count_GC <- count_GC + 1 incrementa el contador de nucleótidos 'G' y 'C'.
+nchar(dna_seq) devuelve la longitud de la secuencia de ADN.
+(count_GC / nchar(dna_seq)) * 100 calcula el contenido de GC en porcentaje.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ejercicios de R: Loops y Análisis de Secuencias de ADN
+Ejercicio 1: Contar la Longitud de una Secuencia de ADN
+Escribe un loop for que cuente la longitud de una secuencia de ADN.
+
+Secuencia de ADN:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+Solución esperada:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+length <- 0
+for (nucleotide in unlist(strsplit(dna_seq, ""))) {
+  length <- length + 1
+}
+print(length)
+
+
+
+Ejercicio 2: Contar Nucleótidos Específicos
+Escribe un loop for que cuente cuántas veces aparece un nucleótido específico en una secuencia de ADN. En este ejemplo, contaremos las veces que aparece 'A'.
+
+Secuencia de ADN:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+Solución esperada:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+count_A <- 0
+for (nucleotide in unlist(strsplit(dna_seq, ""))) {
+  if (nucleotide == "A") {
+    count_A <- count_A + 1
+  }
+}
+print(count_A)
+
+
+
+
+
+Ejercicio 3: Encontrar la Posición de un Nucleótido
+Escribe un loop for que encuentre y guarde las posiciones donde aparece un nucleótido específico en una secuencia de ADN. En este caso, encontraremos la posición de 'C'.
+
+Secuencia de ADN:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+Solución esperada:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+positions_C <- c()
+for (i in 1:nchar(dna_seq)) {
+  if (substring(dna_seq, i, i) == "C") {
+    positions_C <- c(positions_C, i)
+  }
+}
+print(positions_C)
+
+
+
+
+Ejercicio 4: Transcribir ADN a ARN
+Escribe un loop for que convierta una secuencia de ADN en una secuencia de ARN. En la transcripción, las 'T' en ADN se convierten en 'U' en ARN.
+
+Secuencia de ADN:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+Solución esperada:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+rna_seq <- ""
+for (nucleotide in unlist(strsplit(dna_seq, ""))) {
+  if (nucleotide == "T") {
+    rna_seq <- paste0(rna_seq, "U")
+  } else {
+    rna_seq <- paste0(rna_seq, nucleotide)
+  }
+}
+print(rna_seq)
+
+
+
+
+Ejercicio 5: Contar Nucleótidos
+Escribe un loop for que cuente la cantidad de cada tipo de nucleótido (A, T, C, G) en una secuencia de ADN.
+
+Secuencia de ADN:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+Solución esperada:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+count_A <- 0
+count_T <- 0
+count_C <- 0
+count_G <- 0
+
+for (nucleotide in unlist(strsplit(dna_seq, ""))) {
+  if (nucleotide == "A") {
+    count_A <- count_A + 1
+  } else if (nucleotide == "T") {
+    count_T <- count_T + 1
+  } else if (nucleotide == "C") {
+    count_C <- count_C + 1
+  } else if (nucleotide == "G") {
+    count_G <- count_G + 1
+  }
+}
+
+print(paste("A:", count_A))
+print(paste("T:", count_T))
+print(paste("C:", count_C))
+print(paste("G:", count_G))
+
+
+Ejercicio 6: Encontrar el Primer Nucleótido 'G'
+Escribe un loop for que encuentre la posición del primer nucleótido 'G' en una secuencia de ADN.
+
+Secuencia de ADN:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+Solución esperada:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+position_G <- NA
+for (i in 1:nchar(dna_seq)) {
+  if (substring(dna_seq, i, i) == "G") {
+    position_G <- i
+    break
+  }
+}
+print(position_G)
+
+
+
+Ejercicio 7: Invertir una Secuencia de ADN
+Escribe un loop for que invierta una secuencia de ADN.
+
+Secuencia de ADN:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+Solución esperada:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+reverse_seq <- ""
+for (i in nchar(dna_seq):1) {
+  reverse_seq <- paste0(reverse_seq, substring(dna_seq, i, i))
+}
+print(reverse_seq)
+
+
+Ejercicio 8: Calcular el Contenido de GC
+Escribe un loop for que calcule el porcentaje de nucleótidos que son 'G' o 'C' en una secuencia de ADN.
+
+Secuencia de ADN:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+Solución esperada:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+count_GC <- 0
+for (nucleotide in unlist(strsplit(dna_seq, ""))) {
+  if (nucleotide == "G" || nucleotide == "C") {
+    count_GC <- count_GC + 1
+  }
+}
+gc_content <- (count_GC / nchar(dna_seq)) * 100
+print(gc_content)
+
+
+
+Ejercicio 9: Encontrar la Secuencia Complementaria
+Escribe un loop for que genere la secuencia complementaria de una secuencia de ADN. En la secuencia complementaria, 'A' se empareja con 'T', 'T' con 'A', 'C' con 'G' y 'G' con 'C'.
+
+Secuencia de ADN:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+Solución esperada:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+complementary_seq <- ""
+for (nucleotide in unlist(strsplit(dna_seq, ""))) {
+  if (nucleotide == "A") {
+    complementary_seq <- paste0(complementary_seq, "T")
+  } else if (nucleotide == "T") {
+    complementary_seq <- paste0(complementary_seq, "A")
+  } else if (nucleotide == "C") {
+    complementary_seq <- paste0(complementary_seq, "G")
+  } else if (nucleotide == "G") {
+    complementary_seq <- paste0(complementary_seq, "C")
+  }
+}
+print(complementary_seq)
+
+
+
+Ejercicio 10: Encontrar Motivos en una Secuencia de ADN
+Escribe un loop for que encuentre todas las posiciones de un motivo específico (subsecuencia) en una secuencia de ADN. En este caso, buscaremos el motivo 'TAG'.
+
+Secuencia de ADN:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+Solución esperada:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+motif <- "TAG"
+motif_length <- nchar(motif)
+positions <- c()
+for (i in 1:(nchar(dna_seq) - motif_length + 1)) {
+  if (substring(dna_seq, i, i + motif_length - 1) == motif) {
+    positions <- c(positions, i)
+  }
+}
+print(positions)
+
+
+
+Ejercicio 11: Transcribir una Secuencia de ADN a su Secuencia de ARN y Complementaria Invertida
+Escribe un loop for que primero transcriba una secuencia de ADN a ARN y luego genere su secuencia complementaria invertida.
+
+Secuencia de ADN:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+Solución esperada:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+rna_seq <- ""
+for (nucleotide in unlist(strsplit(dna_seq, ""))) {
+  if (nucleotide == "T") {
+    rna_seq <- paste0(rna_seq, "U")
+  } else {
+    rna_seq <- paste0(rna_seq, nucleotide)
+  }
+}
+
+complementary_rna <- ""
+for (nucleotide in unlist(strsplit(rna_seq, ""))) {
+  if (nucleotide == "A") {
+    complementary_rna <- paste0(complementary_rna, "U")
+  } else if (nucleotide == "U") {
+    complementary_rna <- paste0(complementary_rna, "A")
+  } else if (nucleotide == "C") {
+    complementary_rna <- paste0(complementary_rna, "G")
+  } else if (nucleotide == "G") {
+    complementary_rna <- paste0(complementary_rna, "C")
+  }
+}
+
+complementary_rna_inverted <- ""
+for (i in nchar(complementary_rna):1) {
+  complementary_rna_inverted <- paste0(complementary_rna_inverted, substring(complementary_rna, i, i))
+}
+print(complementary_rna_inverted)
+
+
+Ejercicio 12: Contar todas las posibles trinucleótidos (tripletes)
+Escribe un loop for que cuente todas las posibles combinaciones de trinucleótidos en una secuencia de ADN.
+
+Secuencia de ADN:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+Solución esperada:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAG"
+trinucleotide_counts <- list()
+
+# Inicializar el contador para cada posible trinucleótido
+nucleotides <- c("A", "T", "C", "G")
+for (n1 in nucleotides) {
+  for (n2 in nucleotides) {
+    for (n3 in nucleotides) {
+      trinucleotide <- paste0(n1, n2, n3)
+      trinucleotide_counts[[trinucleotide]] <- 0
+    }
+  }
+}
+
+# Contar trinucleótidos en la secuencia de ADN
+seq_length <- nchar(dna_seq)
+for (i in 1:(seq_length - 2)) {
+  trinucleotide <- substring(dna_seq, i, i + 2)
+  trinucleotide_counts[[trinucleotide]] <- trinucleotide_counts[[trinucleotide]] + 1
+}
+
+print(trinucleotide_counts)
+
+
+Ejercicio 13: Encontrar regiones ricas en GC
+Escribe un loop for que encuentre regiones de una secuencia de ADN que sean ricas en GC (definidas como regiones donde más del 60% de los nucleótidos son G o C) en ventanas de 5 nucleótidos.
+
+Secuencia de ADN:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCGCGTAGCTAGCGC"
+Solución esperada:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCGCGTAGCTAGCGC"
+window_size <- 5
+threshold <- 0.60
+rich_regions <- list()
+
+seq_length <- nchar(dna_seq)
+for (i in 1:(seq_length - window_size + 1)) {
+  window <- substring(dna_seq, i, i + window_size - 1)
+  gc_count <- sum(unlist(strsplit(window, "")) %in% c("G", "C"))
+  gc_content <- gc_count / window_size
+  if (gc_content > threshold) {
+    rich_regions[[length(rich_regions) + 1]] <- list(start=i, end=i+window_size-1, sequence=window, gc_content=gc_content)
+  }
+}
+
+print(rich_regions)
+
+
+Ejercicio 14: Transcribir múltiples secuencias de ADN a ARN
+Escribe un loop for que transcriba una lista de secuencias de ADN a ARN.
+
+Lista de secuencias de ADN:
+
+r
+Copiar código
+dna_sequences <- list("ATGCTAGCTAG", "CGTACGTACGTA", "GCTAGCTAGCTA")
+Solución esperada:
+
+r
+Copiar código
+dna_sequences <- list("ATGCTAGCTAG", "CGTACGTACGTA", "GCTAGCTAGCTA")
+rna_sequences <- list()
+
+for (dna_seq in dna_sequences) {
+  rna_seq <- ""
+  for (nucleotide in unlist(strsplit(dna_seq, ""))) {
+    if (nucleotide == "T") {
+      rna_seq <- paste0(rna_seq, "U")
+    } else {
+      rna_seq <- paste0(rna_seq, nucleotide)
+    }
+  }
+  rna_sequences[[length(rna_sequences) + 1]] <- rna_seq
+}
+
+print(rna_sequences)
+
+
+Ejercicio 15: Identificar y contar subsecuencias específicas
+Escribe un loop for que cuente cuántas veces aparece una subsecuencia específica en una secuencia de ADN.
+
+Secuencia de ADN:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAGCTAGCTA"
+subseq <- "TAG"
+Solución esperada:
+
+r
+Copiar código
+dna_seq <- "ATGCTAGCTAGCTAGCTA"
+subseq <- "TAG"
+subseq_length <- nchar(subseq)
+count <- 0
+
+for (i in 1:(nchar(dna_seq) - subseq_length + 1)) {
+  if (substring(dna_seq, i, i + subseq_length - 1) == subseq) {
+    count <- count + 1
+  }
+}
+
+print(count)
+
+
+Ejercicio 16: Encontrar las secuencias palindrómicas
+Una secuencia de ADN es palindrómica si se lee igual de izquierda a derecha que de derecha a izquierda. Escribe un loop for que encuentre todas las secuencias palindrómicas de longitud 4 en una secuencia de ADN.
+
+Secuencia de ADN:
+
+r
+Copiar código
+dna_seq <- "ATGCCTAGCTAGCGCAT"
+Solución esperada:
+
+r
+Copiar código
+dna_seq <- "ATGCCTAGCTAGCGCAT"
+palindromic_sequences <- list()
+
+seq_length <- nchar(dna_seq)
+for (i in 1:(seq_length - 3)) {
+  seq <- substring(dna_seq, i, i + 3)
+  rev_seq <- paste0(rev(unlist(strsplit(seq, ""))), collapse = "")
+  if (seq == rev_seq) {
+    palindromic_sequences[[length(palindromic_sequences) + 1]] <- list(position = i, sequence = seq)
+  }
+}
+
+print(palindromic_sequences)
+
+
+
+
+
+
+
+Para eliminar el nombre largo de una secuencia de ADN y quedarnos solo con el número de GenBank, podemos usar funciones de manipulación de cadenas en R. Aquí te explico los pasos detalladamente, seguido de un ejemplo práctico.
+
+Pasos para Extraer el Número de GenBank
+Identificar la Cadena de Texto: Primero, debemos identificar la cadena de texto de la cual queremos extraer el número de GenBank. Normalmente, esta cadena contiene el nombre largo y el número de GenBank en algún formato estructurado.
+
+Dividir la Cadena: Usaremos una función de división de cadenas (strsplit) para dividir la cadena original en partes basadas en un delimitador específico que separe el nombre largo del número de GenBank.
+
+Extraer el Número de GenBank: Una vez que tenemos las partes de la cadena, seleccionamos la parte que contiene el número de GenBank.
+
+Limpiar la Cadena (Opcional): Si es necesario, podemos realizar limpieza adicional, como eliminar espacios en blanco o caracteres no deseados.
+
+Ejemplo en R
+Supongamos que tenemos una cadena de texto que contiene información del nombre largo y el número de GenBank en el siguiente formato: "GenBank: NC_000001 Homo sapiens chromosome 1, complete sequence".
+
+Objetivo: Extraer solo el número de GenBank, que en este caso es NC_000001.
+
+r
+Copiar código
+# Cadena de ejemplo
+dna_info <- "GenBank: NC_000001 Homo sapiens chromosome 1, complete sequence"
+
+# Paso 1: Dividir la cadena en partes
+parts <- unlist(strsplit(dna_info, " "))
+
+# Paso 2: Buscar y extraer la parte que comienza con "NC_"
+genbank_number <- NA
+for (part in parts) {
+  if (grepl("^NC_", part)) {
+    genbank_number <- part
+    break
+  }
+}
+
+# Imprimir el número de GenBank
+print(genbank_number)
+Explicación de los Pasos
+Cadena de Ejemplo:
+
+r
+Copiar código
+dna_info <- "GenBank: NC_000001 Homo sapiens chromosome 1, complete sequence"
+Aquí, la cadena dna_info contiene el nombre largo junto con el número de GenBank.
+
+Dividir la Cadena en Partes:
+
+r
+Copiar código
+parts <- unlist(strsplit(dna_info, " "))
+Usamos strsplit para dividir la cadena en partes separadas por espacios. La función strsplit devuelve una lista, y unlist convierte esta lista en un vector de caracteres.
+
+Buscar y Extraer la Parte Deseada:
+
+r
+Copiar código
+genbank_number <- NA
+for (part in parts) {
+  if (grepl("^NC_", part)) {
+    genbank_number <- part
+    break
+  }
+}
+Utilizamos un loop for para recorrer cada parte de la cadena dividida. La función grepl("^NC_", part) verifica si la parte actual comienza con "NC_". Si es así, asignamos esa parte a la variable genbank_number y salimos del loop con break.
+
+Imprimir el Número de GenBank:
+
+r
+Copiar código
+print(genbank_number)
+Finalmente, imprimimos el número de GenBank extraído.
+
+Generalización
+Si los números de GenBank pueden tener diferentes formatos, ajusta la expresión regular en grepl según sea necesario. También puedes utilizar diferentes delimitadores en strsplit si el formato de la cadena varía.
+
+Espero que esto te ayude a entender cómo extraer el número de GenBank de una cadena más larga en R. Si tienes más preguntas o necesitas más ejemplos, ¡no dudes en preguntar!
+
+User
+podrias ponerme el ejemplo con varios nombres de secuencias porfavor
+ChatGPT
+¡Claro! Aquí tienes un ejemplo más completo donde se procesan varias cadenas de secuencias de ADN para extraer los números de GenBank.
+
+Ejemplo en R con Varias Secuencias
+Supongamos que tenemos una lista de cadenas de texto, cada una con un formato similar:
+
+r
+Copiar código
+# Lista de cadenas de ejemplo
+dna_info_list <- c(
+  "GenBank: NC_000001 Homo sapiens chromosome 1, complete sequence",
+  "GenBank: NC_000002 Homo sapiens chromosome 2, complete sequence",
+  "GenBank: NC_000003 Homo sapiens chromosome 3, complete sequence",
+  "GenBank: NC_000004 Homo sapiens chromosome 4, complete sequence"
+)
+
+# Crear una lista para almacenar los números de GenBank extraídos
+genbank_numbers <- c()
+
+# Loop para procesar cada cadena en la lista
+for (dna_info in dna_info_list) {
+  # Paso 1: Dividir la cadena en partes
+  parts <- unlist(strsplit(dna_info, " "))
+  
+  # Paso 2: Buscar y extraer la parte que comienza con "NC_"
+  genbank_number <- NA
+  for (part in parts) {
+    if (grepl("^NC_", part)) {
+      genbank_number <- part
+      break
+    }
+  }
+  
+  # Agregar el número de GenBank extraído a la lista
+  genbank_numbers <- c(genbank_numbers, genbank_number)
+}
+
+# Imprimir los números de GenBank extraídos
+print(genbank_numbers)
+Explicación de los Pasos
+Lista de Cadenas de Ejemplo:
+
+r
+Copiar código
+dna_info_list <- c(
+  "GenBank: NC_000001 Homo sapiens chromosome 1, complete sequence",
+  "GenBank: NC_000002 Homo sapiens chromosome 2, complete sequence",
+  "GenBank: NC_000003 Homo sapiens chromosome 3, complete sequence",
+  "GenBank: NC_000004 Homo sapiens chromosome 4, complete sequence"
+)
+Aquí, dna_info_list es un vector de caracteres donde cada elemento es una cadena de texto con información de ADN.
+
+Crear una Lista para Almacenar los Números de GenBank Extraídos:
+
+r
+Copiar código
+genbank_numbers <- c()
+Loop para Procesar Cada Cadena en la Lista:
+
+r
+Copiar código
+for (dna_info in dna_info_list) {
+  # Paso 1: Dividir la cadena en partes
+  parts <- unlist(strsplit(dna_info, " "))
+  
+  # Paso 2: Buscar y extraer la parte que comienza con "NC_"
+  genbank_number <- NA
+  for (part in parts) {
+    if (grepl("^NC_", part)) {
+      genbank_number <- part
+      break
+    }
+  }
+  
+  # Agregar el número de GenBank extraído a la lista
+  genbank_numbers <- c(genbank_numbers, genbank_number)
+}
+Imprimir los Números de GenBank Extraídos:
+
+r
+Copiar código
+print(genbank_numbers)
+Esto imprime el vector genbank_numbers que contiene solo los números de GenBank extraídos de las cadenas de texto.
+
+Resultado Esperado
+Al ejecutar el código, deberías obtener el siguiente resultado:
+
+r
+Copiar código
+[1] "NC_000001" "NC_000002" "NC_000003" "NC_000004"
+Este resultado muestra que hemos extraído correctamente los números de GenBank de cada cadena en la lista.
+
+
+
+
+
